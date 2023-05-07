@@ -1,0 +1,348 @@
+openapi: 3.0
+info:
+  title: request`s app
+  description: Simple app for friends requests.
+  version: 3.0
+servers:
+  - url: http://localhost:8000
+    description: First page of an app
+paths:
+  /users:
+    get:
+      summary: Метод получения списка пользователей и взаимодействия с ними
+      tags:
+        - Users
+      operationId: getAllUsers
+      responses:
+        '200':
+          description: Успешный ответ со списком пользователей
+          content:
+            application/html:
+              schema:
+                $ref: "#/components/schemas/Users"
+        'default':
+          description: Всё нестандартное
+          content:
+            application/html:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /login:
+    get:
+      summary: Метод обращения к окну авторизации
+      tags:
+        - Users
+      operationId: getAuthWindow
+      responses:
+        '200':
+          description: Успешная обращение
+          content:
+            application/html:
+              schema:
+                $ref: "#/components/schemas/User"
+        'default':
+          description: Всё нестандартное
+          content:
+            application/html:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary:
+        tags:
+          - Users
+        operationId: Authorization
+        requestBody:
+          required: true
+          content:
+            application/html:
+              schema:
+                $ref: "#/components/schemas/User"
+        responses:
+        '200':
+          description: Успешная авторизация пользователя
+          content:
+            application/html:
+              schema:
+                $ref: "#/components/schemas/User"
+        'default':
+          description: Всё нестандартное
+          content:
+            application/html:
+              schema:
+                $ref: "#/components/schemas/Error"
+              
+  /registration:
+    get:
+      summary: Метод обращения к окну регистрации нового пользователя
+      tags:
+        - Users
+      operationId: getRegistrationWindow
+      responses:
+        '200':
+          description: Успешная обращение
+          content:
+            application/html:
+              schema:
+                $ref: "#/components/schemas/User"
+        'default':
+          description: Всё нестандартное
+          content:
+            application/html:
+              schema:
+                $ref: "#/components/schemas/Error"
+    post:
+      summary: Регистрация нового пользователя
+      tags:
+        - Users
+      operationId: Registration
+      requestBody:
+        required: true
+        content:
+          application/html:
+            schema:
+            $ref: "#/components/schemas/User"
+      responses:
+      '200':
+        description: Успешная регистрация нового пользователя
+        content:
+          application/html:
+            schema:
+              $ref: "#/components/schemas/User"
+      'default':
+        description: Всё нестандартное
+        content:
+          application/html:
+             schema:
+              $ref: "#/components/schemas/Error"
+  /profile:
+    get:
+      summary: Обращение к профилю пользователя
+      tags:
+        - Users
+      operationId: getProfile
+      responses:
+        '200':
+          description: Успешый просмотр профиля 
+          content:
+            application/html:
+              schema:
+                $ref: "#/components/schemas/User"
+        'default':
+          description: Всё нестандартное
+          content:
+            application/html:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /logout:
+    post:
+      summary: Выход из учетной записи
+      tags:
+        - Users
+      operationId: Logout
+      requestBody:
+        required: True
+        content:
+          application/html: {}
+      responses:
+        '200':
+          description: Успешная выход из учетной записи
+          content:
+            application/html: {}
+        'default':
+          description: Всё нестандартное
+          content:
+            application/html:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /send_friend_request/{user_id}:
+    post:
+      summary: Отправление пользователю приглашения в друзья
+      tags:
+        - Users
+      operationId: sendRequest
+      parameters:
+        name: user_id
+        in: path
+        required: true
+        description: Идентификатор пользователя,которому отправляется запрос
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/html: {}
+      responses:
+        '200':
+          description: Успешная отправление приглашения
+          content:
+            application/html: {}
+        'default':
+          description: Всё нестандартное
+          content:
+            application/html:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /accept_friend_request/{request_id}:
+    post:
+      summary: Принятие от другого пользователя приглашения в друзья
+      tags:
+        - Users
+      operationId: acceptRequest
+      parameters:
+        name: request_id
+        in: path
+        required: true
+        description: Идентификатор пользователя,который отправил запрос
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/html: {}
+      responses:
+        '200':
+          description: Успешная принятие приглашения
+          content:
+            application/html: {}
+        'default':
+          description: Всё нестандартное
+          content:
+            application/html:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /deny_friend_request/{request_id}:
+    post:
+      summary: Отклонение приглашения в друзья
+      tags:
+        - Users
+      operationId: denyRequest
+      parameters:
+        name: request_id
+        in: path
+        required: true
+        description: Идентификатор пользователя,запрос которого отклоняется
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/html: {}
+      responses:
+        '200':
+          description: Успешная отклонение приглашения
+          content:
+            application/html: {}
+        'default':
+          description: Всё нестандартное
+          content:
+            application/html:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /recall_friend_request/{request_id}:
+    post:
+      summary: Отозвать свое приглашение в друзья
+      tags:
+        - Users
+      operationId: recallRequest
+      parameters:
+        name: request_id
+        in: path
+        required: true
+        description: Идентификатор пользователя,запрос к которому отзывается
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/html: {}
+      responses:
+        '200':
+          description: Успешный отзыв приглашения
+          content:
+            application/html: {}
+        'default':
+          description: Всё нестандартное
+          content:
+            application/html:
+              schema:
+                $ref: "#/components/schemas/Error"
+  /delete_from_friends/{user_id}:
+    post:
+      summary: Удаление пользователя из друзей
+      tags:
+        - Users
+      operationId: deleteFromFriends
+      parameters:
+        name: user_id
+        in: path
+        required: true
+        description: Идентификатор пользователя, который удаляется из друзей
+        schema:
+          type: string
+      requestBody:
+        required: true
+        content:
+          application/html: {}
+      responses:
+        '200':
+          description: Успешная удаление пользователя из друзей
+          content:
+            application/html: {}
+        'default':
+          description: Всё нестандартное
+          content:
+            application/html:
+              schema:
+                $ref: "#/components/schemas/Error"
+
+
+    
+
+
+    
+
+
+
+components:
+  schemas:
+    User:
+      type: object
+      required:
+        - first_name
+        - last_name
+        - username
+        - password
+      properties:
+        user_id:
+          type: integer
+          example: 2
+        first_name:
+          type: string
+          example: Peter
+        last_name:
+          type: string
+          example: Miller
+        username:
+          type: string
+          example: pitmill
+        password:
+          type: string
+          example: qwer123456
+        friends:
+          type: array
+          items:
+            type: string 
+    Users:
+      type: array
+      items:
+        $ref: "#/components/schemas/User"
+    Error:
+      type: object
+      required:
+        - code
+        - message
+      properties:
+        code:
+          type: integer
+        message:
+          type: string
+
