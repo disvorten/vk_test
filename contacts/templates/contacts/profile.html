@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Title</title>
+</head>
+<body>
+<div class="card-body">
+    <form action="{% url 'profile' %}" method="post">
+        {% csrf_token %}
+        <div class="form-row">
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="small mb-1" for="{{ form.first_name.id_for_label }}">
+                        Имя
+                    </label>
+                    {{ form.first_name }}
+                </div>
+            </div>
+            <div class="col-md-6">
+                <div class="form-group">
+                    <label class="small mb-1" for="{{ form.last_name.id_for_label }}">
+                        Фамилия
+                    </label>
+                    {{ form.last_name }}
+                </div>
+            </div>
+
+        </div>
+        <div class="form-row">
+            <div class="col-md-6">
+                <label class="small mb-1" for="{{ form.username.id_for_label }}">
+                    Имя пользователя
+                </label>
+                {{ form.username }}
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-lg-12" style="margin-top: 33px;">
+                <input class="btn btn-info btn-block" type="submit" value="Сохранить">
+            </div>
+        </div>
+        <div class="form-row">
+            <div class="col-md-6">
+                <label class="small mb-1" for="{{ form.friends.id_for_label }}">
+                    Список друзей
+                </label>
+                {%if not friends %}
+                <h5>Empty list</h5>
+                {%else%}
+                {% for friend in friends %}
+                <h5>
+                    {{friend}}
+                <a href="{% url 'del from friends' friend.id%}">Delete from friends?</a>
+                </h5>
+                {%endfor%}
+                {%endif%}
+            </div>
+        </div>
+        {%if messages%}
+        {%for message in messages %}
+        <div><h4>{{message}}</h4></div>
+        {%endfor%}
+        {%endif%}
+        <div>
+            <h2>Friends requests to you</h2>
+            {%for friend_request in all_friend_requests%}
+            <h3>
+                {{friend_request.from_user}}
+                <a href="{%url 'accept friend request' friend_request.id%}"> accept friend request</a>
+                <a href="{%url 'deny friend request' friend_request.id%}"> deny friend request</a>
+            </h3>
+            {%endfor%}
+        </div>
+        <div>
+            <h2>Friends requests from you</h2>
+            {%for friend_request in your_friend_requests%}
+            <h3>{% if friend_request %}
+                To {{friend_request.to_user}} <a href="{% url 'recall request' friend_request.to_user.id %}">Want to recall?</a>
+            {% endif %}
+            </h3>
+            {%endfor%}
+        </div>
+
+        <div>
+            <a href="{% url 'see_users'%}">Пользователи</a>
+        </div>
+        <div>
+            <a href="{% url 'logout'%}">Выйти</a>
+        </div>
+    </form>
+</div>
+</body>
+</html>

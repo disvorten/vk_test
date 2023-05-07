@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Users</title>
+</head>
+<body>
+{%if user.is_authenticated%}
+<h5><a href="{% url 'profile'%}">Profile</a></h5>
+{% else %}
+<h5><a href="{% url 'login'%}">Login</a></h5>
+<h5><a href="{% url 'registration'%}">Registration</a></h5>
+{%endif%}
+{%if messages%}
+{%for message in messages %}
+<div ><h4>{{message}}</h4></div>
+{%endfor%}
+{%endif%}
+{%if user.is_authenticated%}
+{% for user in users%}
+{%if user != request.user%}
+<div>
+    <h4>
+        {{user.id}} user: first name - {{ user.first_name}}, last name - {{user.last_name}}, username -
+        {{user.username}}</h4>
+        status:
+        {%if user not in request.user.friends.all%}
+            {% if user in all_friend_requests%}
+                You've got request from this user! Would you like to become a friends?
+            <a href="{%url 'send friend request' user.id%}">Confirm request from user</a>
+            {% elif user in your_friend_requests%}
+                You`ve sent a request to this user already!
+                <a href="{% url 'recall request' user.id %}">Want to recall?</a>
+                {% else %}
+                You are not friends.
+            <a href="{%url 'send friend request' user.id%}">Send friend request</a>
+            {% endif %}
+        {% else %}
+        <h4>You are already friends with {{user}}!</h4>
+        <a href="{% url 'del from friends' user.id%}">Delete from friends?</a>
+        {%endif%}
+</div>
+
+{%endif%}
+{% endfor %}
+{%endif%}
+</body>
+</html>

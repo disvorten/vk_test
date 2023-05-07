@@ -1,0 +1,34 @@
+[
+  {
+    "model": "contacts.friend_request",
+    "pk": 2,
+    "fields": {
+      "from_user": 1,
+      "to_user": 3
+    }
+  },
+  {
+    "model": "contacts.friend_request",
+    "pk": 3,
+    "fields": {
+      "from_user": 1,
+      "to_user": 4
+    }
+  },
+  {
+    "model": "contacts.friend_request",
+    "pk": 4,
+    "fields": {
+      "from_user": 1,
+      "to_user": 5
+    }
+  },
+  {
+    "model": "contacts.friend_request",
+    "pk": 11,
+    "fields": {
+      "from_user": 2,
+      "to_user": 3
+    }
+  }
+]
