@@ -6,15 +6,6 @@ from django.urls import reverse
 from contacts.models import User
 
 
-# class ContactTests(TestCase):
-#
-#     def test_str(self):
-#         contact = User(first_name='John', last_name='Smith')
-#         self.assertEquals(
-#             str(contact),
-#             'John Smith',
-#         )
-
 
 class UserRegistrationViewTestCase(TestCase):
 
@@ -51,19 +42,3 @@ class UsersViewTestCase(TestCase):
 
         self.assertEqual(response.status_code, HTTPStatus.OK)
         self.assertTemplateUsed(response, 'contacts/users.html')
-
-
-# class ProfileViewTestCase(TestCase):
-#     def setUp(self):
-#         self.data = {
-#             'username': 'maxmill',
-#             'password1': 'qwer123456'
-#         }
-#
-#     def test_view(self):
-#         user = User.objects.filter(username=self.data['username'])
-#         path = reverse('profile')
-#         response = user.get(path)
-#
-#         self.assertEqual(response.status_code, HTTPStatus.OK)
-#         self.assertTemplateUsed(response, 'contacts/profile.html')
