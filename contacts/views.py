@@ -99,7 +99,7 @@ def login(request):
     context = {
         'form': form
     }
-    return render(request, 'contacts/login.html', context)
+    return render(request, 'contacts/test.html', context)
 
 
 def registration(request):

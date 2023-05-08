@@ -5,9 +5,11 @@ from .models import User
 
 class UserLoginForm(AuthenticationForm):
     username = forms.CharField(widget=forms.TextInput(attrs={
-        'class': 'form-control py-4', 'placeholder': 'Введите имя пользователя'}))
+        "type": "text",
+        'name': "u", 'placeholder': "Username", 'required': "required"}))
     password = forms.CharField(widget=forms.PasswordInput(attrs={
-        'class': 'form-control py-4', 'placeholder': 'Введите пароль'}))
+        "type": "password",
+        'name': "p", 'placeholder': 'Password', 'required': "required"}))
 
     class Meta:
         model = User
